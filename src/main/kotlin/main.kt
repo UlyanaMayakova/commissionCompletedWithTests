@@ -1,7 +1,6 @@
 import kotlin.math.roundToInt
 
 fun main() {
-
     println(
         """
         Выберите тип Вашей карты (введите число от 1 до 3):
@@ -19,11 +18,17 @@ fun main() {
     } else {
         println("Введите сумму перевода")
         val money = readLine()!!.toInt() * 100
-        cardType(card, money)
+        if (card == 2 && money < 35 * 100) {
+            println("Возможен перевод только от 35 рублей")
+        } else {
+            val userCommission = cardType(card, money, moneySent)
+            val commission = userCommission / 100
+            println("Комиссия составила $commission рублей")
+        }
     }
 }
 
-fun cardType(card: Int = 3, money: Int, moneySent: Int = 0) {
+fun cardType(card: Int = 3, money: Int, moneySent: Int = 0): Int {
     return when (card) {
         1 -> masterMaestroCommission(money, moneySent)
         2 -> visaMirCommission(money)
@@ -31,29 +36,21 @@ fun cardType(card: Int = 3, money: Int, moneySent: Int = 0) {
     }
 }
 
-fun masterMaestroCommission(moneySent: Int, money: Int) {
-    when {
-        moneySent < 75_000 * 100 -> println("Комиссия не взимается")
+fun masterMaestroCommission(money: Int, moneySent: Int): Int {
+    return when {
+        moneySent < 75_000 * 100 -> 0
         else -> {
-            val userCommission = (money * 0.006 + 20 * 100).roundToInt().toDouble() / 100
-            println("Комиссия: $userCommission рублей")
+            val userCommission = (money * 0.006 + 20 * 100).roundToInt()
+            userCommission
         }
     }
 }
 
-fun visaMirCommission(money: Int) {
+fun visaMirCommission(money: Int): Int {
     val commission = 0.0075
-    val minimalSum = 3500
-    val userCommission: Double
-
-    if (money >= minimalSum) {
-        userCommission = (money * commission).roundToInt().toDouble() / 100
-        println("Сумма комиссии $userCommission рублей")
-    } else {
-        println("Возможен перевод только от 35 рублей")
-    }
+    return (money * commission).roundToInt()
 }
 
-fun vkPayCommission() {
-    println("Комиссия не взимается")
+fun vkPayCommission(): Int {
+    return 0
 }
