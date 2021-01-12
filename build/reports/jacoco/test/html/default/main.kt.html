@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>main.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">commissionCompleted</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">main.kt</span></div><h1>main.kt</h1><pre class="source lang-java linenums">import kotlin.math.roundToInt
+
+fun main() {
+//    println(
+//        &quot;&quot;&quot;
+//        Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї Р’Р°С€РµР№ РєР°СЂС‚С‹ (РІРІРµРґРёС‚Рµ С‡РёСЃР»Рѕ РѕС‚ 1 РґРѕ 3):
+//        1. Mastercard РёР»Рё Maestro
+//        2. Visa РёР»Рё РњРёСЂ
+//        3. VK Pay
+//        &quot;&quot;&quot;
+//    )
+
+<span class="nc" id="L13">    val card: Int = 1</span>
+<span class="nc" id="L14">    val moneySent = 100 * 100</span>
+<span class="nc" id="L15">    val money = 1000 * 100</span>
+
+<span class="nc" id="L17">    calculateCommission(card, moneySent, money)</span>
+<span class="nc" id="L18">}</span>
+
+fun calculateCommission(card: Int, moneySent: Int, money: Int): String {
+//    card = readLine()!!.toInt()
+
+//    println(&quot;Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґРѕРІ РІ СЌС‚РѕРј РјРµСЃСЏС†Рµ&quot;)
+//    val moneySent = readLine()!!.toInt() * 100
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">    if (moneySent &gt; 600_000 * 100) {</span>
+<span class="nc" id="L26">        return (&quot;РџСЂРµРІС‹С€РµРЅ Р»РёРјРёС‚ СЃСѓРјРјС‹ РѕС‚РїСЂР°РІРєРё Р·Р° РјРµСЃСЏС†&quot;)</span>
+    } else {
+//        println(&quot;Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°&quot;)
+//        val money = readLine()!!.toInt() * 100
+<span class="pc bpc" id="L30" title="2 of 4 branches missed.">        if (card == 2 &amp;&amp; money &lt; 35 * 100) {</span>
+<span class="nc" id="L31">            return (&quot;Р’РѕР·РјРѕР¶РµРЅ РїРµСЂРµРІРѕРґ С‚РѕР»СЊРєРѕ РѕС‚ 35 СЂСѓР±Р»РµР№&quot;)</span>
+        } else {
+<span class="fc" id="L33">            val userCommission = cardType(card, money, moneySent)</span>
+<span class="fc" id="L34">            val commission = userCommission / 100</span>
+<span class="fc" id="L35">            return (&quot;РљРѕРјРёСЃСЃРёСЏ СЃРѕСЃС‚Р°РІРёР»Р° $commission СЂСѓР±Р»РµР№&quot;)</span>
+        }
+    }
+}
+
+<span class="nc" id="L40">fun cardType(card: Int = 3, money: Int, moneySent: Int = 0): Int {</span>
+<span class="pc bpc" id="L41" title="2 of 3 branches missed.">    return when (card) {</span>
+<span class="nc" id="L42">        1 -&gt; masterMaestroCommission(money, moneySent)</span>
+<span class="fc" id="L43">        2 -&gt; visaMirCommission(money)</span>
+<span class="nc" id="L44">        else -&gt; vkPayCommission()</span>
+    }
+}
+
+fun masterMaestroCommission(money: Int, moneySent: Int): Int {
+<span class="nc" id="L49">    return when {</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        moneySent &lt; 75_000 * 100 -&gt; 0</span>
+        else -&gt; {
+<span class="nc" id="L52">            val userCommission = (money * 0.006 + 20 * 100).roundToInt()</span>
+<span class="nc" id="L53">            userCommission</span>
+        }
+    }
+}
+
+fun visaMirCommission(money: Int): Int {
+<span class="fc" id="L59">    val commission = 0.0075</span>
+<span class="fc" id="L60">    return (money * commission).roundToInt()</span>
+}
+
+fun vkPayCommission(): Int {
+<span class="nc" id="L64">    return 0</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
