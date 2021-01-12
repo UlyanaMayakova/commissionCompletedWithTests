@@ -1,29 +1,38 @@
 import kotlin.math.roundToInt
 
 fun main() {
-    println(
-        """
-        Выберите тип Вашей карты (введите число от 1 до 3):
-        1. Mastercard или Maestro
-        2. Visa или Мир
-        3. VK Pay
-        """
-    )
-    val card: Int = readLine()!!.toInt()
+//    println(
+//        """
+//        Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї Р’Р°С€РµР№ РєР°СЂС‚С‹ (РІРІРµРґРёС‚Рµ С‡РёСЃР»Рѕ РѕС‚ 1 РґРѕ 3):
+//        1. Mastercard РёР»Рё Maestro
+//        2. Visa РёР»Рё РњРёСЂ
+//        3. VK Pay
+//        """
+//    )
 
-    println("Введите сумму переводов в этом месяце")
-    val moneySent = readLine()!!.toInt() * 100
-    if (moneySent > 600_000 * 100) {
-        println("Превышен лимит суммы отправки за месяц")
+    val card = 1
+    val moneySent = 100 * 100
+    val money = 1000 * 100
+
+    calculateCommission(card, moneySent, money)
+}
+
+fun calculateCommission(card: Int, moneySent: Int, money: Int): String {
+//    card = readLine()!!.toInt()
+
+//    println("Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґРѕРІ РІ СЌС‚РѕРј РјРµСЃСЏС†Рµ")
+//    val moneySent = readLine()!!.toInt() * 100
+    return if (moneySent > 600_000 * 100) {
+        ("РџСЂРµРІС‹С€РµРЅ Р»РёРјРёС‚ СЃСѓРјРјС‹ РѕС‚РїСЂР°РІРєРё Р·Р° РјРµСЃСЏС†")
     } else {
-        println("Введите сумму перевода")
-        val money = readLine()!!.toInt() * 100
+//        println("Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РїРµСЂРµРІРѕРґР°")
+//        val money = readLine()!!.toInt() * 100
         if (card == 2 && money < 35 * 100) {
-            println("Возможен перевод только от 35 рублей")
+            ("Р’РѕР·РјРѕР¶РµРЅ РїРµСЂРµРІРѕРґ С‚РѕР»СЊРєРѕ РѕС‚ 35 СЂСѓР±Р»РµР№")
         } else {
             val userCommission = cardType(card, money, moneySent)
             val commission = userCommission / 100
-            println("Комиссия составила $commission рублей")
+            ("РљРѕРјРёСЃСЃРёСЏ СЃРѕСЃС‚Р°РІРёР»Р° $commission СЂСѓР±Р»РµР№")
         }
     }
 }
